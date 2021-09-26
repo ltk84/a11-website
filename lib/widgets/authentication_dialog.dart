@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:a11_website/widgets/custom_title.dart';
+import '../widgets/custom_title.dart';
 import 'package:flutter/material.dart';
 
 class AuthenticationDialog extends StatelessWidget {

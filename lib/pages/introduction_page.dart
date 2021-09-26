@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
@@ -44,15 +46,20 @@ class IntroductionPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                'Scroll down',
-                style: Theme.of(context).textTheme.subtitle2,
+                'Swipe up',
+                style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                  color: Theme.of(context).hintColor,
+                ),
               ),
               SizedBox(
                 height: 8,
               ),
-              SvgIcon(
-                iconPath: 'assets/icons/scroll_down.svg',
-                size: 18,
+              Transform.rotate(
+                angle: pi,
+                child: SvgIcon(
+                  iconPath: 'assets/icons/scroll_down.svg',
+                  size: 18,
+                ),
               ),
               SizedBox(
                 height: 18,

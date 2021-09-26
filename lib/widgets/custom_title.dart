@@ -23,12 +23,16 @@ class CustomTitle extends StatelessWidget {
         children: [
           Text(
             title,
-            style: Theme.of(context).textTheme.headline1,
+            style: Theme.of(context).textTheme.headline1!.copyWith(
+              color: Theme.of(context).primaryColor,
+            ),
             textAlign: TextAlign.center,
           ),
           Text(
             subtitle,
-            style: Theme.of(context).textTheme.headline2,
+            style: Theme.of(context).textTheme.headline2!.copyWith(
+              color: Theme.of(context).primaryColor,
+            ),
             textAlign: TextAlign.center,
           ),
         ],
