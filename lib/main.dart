@@ -84,6 +84,9 @@ class _MyHomePageState extends State<MyHomePage> {
               height: btnAuthSize,
               width: btnAuthSize,
               child: InkWell(
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
                 onTap: () {
                   showDialog(
                     barrierColor: Colors.transparent,
@@ -109,14 +112,25 @@ class _MyHomePageState extends State<MyHomePage> {
             // Dark mode Switch.
             Transform.scale(
               scale: 0.5,
-              child: FlutterSwitch(
-                value: darkMode,
-                onToggle: (value) {
+              child: InkWell(
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                borderRadius: BorderRadius.circular(20),
+                onTap: () {
                   setState(() {
-                    darkMode = value;
+                    darkMode = !darkMode;
                   });
                 },
-                activeColor: Theme.of(context).primaryColor,
+                child: FlutterSwitch(
+                  value: darkMode,
+                  onToggle: (value) {
+                    setState(() {
+                      darkMode = value;
+                    });
+                  },
+                  activeColor: Theme.of(context).primaryColor,
+                ),
               ),
             ),
             // #
