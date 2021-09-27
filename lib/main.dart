@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 
 import '../pages/introduction_page.dart';
 import '../widgets/svg_icon.dart';
 import '../widgets/authentication_dialog.dart';
-import 'pages/content_page/content_page.dart';
+import '../pages/content_page/content_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -53,9 +55,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final PageController pageController = PageController(initialPage: 0);
+  final isWebMobile = kIsWeb && (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android);
   bool darkMode = false;
   double btnAuthSize = 25;
-  //bool pageIsScrolling = false;
+  bool pageIsScrolling = false;
 
   @override
   void initState() {
@@ -74,7 +77,6 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-
             // Authentication Button
             AnimatedContainer(
               duration: Duration(milliseconds: 200),
@@ -118,51 +120,45 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             // #
-
           ],
         ),
       ),
-      body: PageView(
-        scrollDirection: Axis.vertical,
-        controller: pageController,
-        //physics: NeverScrollableScrollPhysics(),
-        children: [
-          IntroductionPage(),
-          ContentPage(),
-        ],
+      body: Listener(
+        // to detect scroll
+        onPointerSignal: (pointerSignal) {
+          if (pageController.page == 0) {
+            if (pointerSignal is PointerScrollEvent) {
+              _onScroll(pointerSignal.scrollDelta.dy);
+            }
+          }
+        },
+        child: PageView(
+          scrollDirection: Axis.vertical,
+          controller: pageController,
+          physics: isWebMobile ? AlwaysScrollableScrollPhysics() : NeverScrollableScrollPhysics(),
+          children: [
+            IntroductionPage(),
+            ContentPage(onScroll: _onScroll,),
+          ],
+        ),
       ),
-      // body: GestureDetector(
-      //   // to detect swipe
-      //   onPanUpdate: (details) {
-      //     _onScroll(details.delta.dy * -1);
-      //   },
-      //   child: Listener(
-      //     // to detect scroll
-      //     onPointerSignal: (pointerSignal) {
-      //       if (pointerSignal is PointerScrollEvent) {
-      //         _onScroll(pointerSignal.scrollDelta.dy);
-      //       }
-      //     },
-      //     child:
-      //   ),
-      // ),
     );
   }
 
-  // void _onScroll(double offset) {
-  //   if (pageIsScrolling == false) {
-  //     pageIsScrolling = true;
-  //     if (offset > 0) {
-  //       pageController
-  //           .nextPage(
-  //               duration: Duration(milliseconds: 400), curve: Curves.easeInOut)
-  //           .then((value) => pageIsScrolling = false);
-  //     } else {
-  //       pageController
-  //           .previousPage(
-  //               duration: Duration(milliseconds: 400), curve: Curves.easeInOut)
-  //           .then((value) => pageIsScrolling = false);
-  //     }
-  //   }
-  // }
+  void _onScroll(double offset) {
+    if (pageIsScrolling == false) {
+      pageIsScrolling = true;
+      if (offset > 0) {
+        pageController
+            .nextPage(
+                duration: Duration(milliseconds: 500), curve: Curves.easeInOut)
+            .then((value) => pageIsScrolling = false);
+      } else {
+        pageController
+            .previousPage(
+                duration: Duration(milliseconds: 500), curve: Curves.easeInOut)
+            .then((value) => pageIsScrolling = false);
+      }
+    }
+  }
 }

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/svg_icon.dart';
@@ -11,10 +12,39 @@ class IntroductionPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isWebMobile = kIsWeb && (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android);
     final double height = MediaQuery.of(context).size.height;
 
     return Stack(
       children: [
+        Container(
+          color: Colors.transparent,
+          alignment: Alignment.bottomCenter,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Text(
+                isWebMobile ? 'Swipe Up' : 'Scroll Down',
+                style: Theme.of(context).textTheme.subtitle2!.copyWith(
+                  color: Theme.of(context).hintColor,
+                ),
+              ),
+              SizedBox(
+                height: 8,
+              ),
+              Transform.rotate(
+                angle: isWebMobile? pi : 2*pi,
+                child: SvgIcon(
+                  iconPath: 'assets/icons/scroll_down.svg',
+                  size: 18,
+                ),
+              ),
+              SizedBox(
+                height: 18,
+              ),
+            ],
+          ),
+        ),
         CarouselSlider(
           items: [
             CustomTitle(
@@ -37,34 +67,6 @@ class IntroductionPage extends StatelessWidget {
             height: height,
             viewportFraction: 1.0,
             enlargeCenterPage: false,
-          ),
-        ),
-        Container(
-          color: Colors.transparent,
-          alignment: Alignment.bottomCenter,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Text(
-                'Swipe up',
-                style: Theme.of(context).textTheme.subtitle2!.copyWith(
-                  color: Theme.of(context).hintColor,
-                ),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Transform.rotate(
-                angle: pi,
-                child: SvgIcon(
-                  iconPath: 'assets/icons/scroll_down.svg',
-                  size: 18,
-                ),
-              ),
-              SizedBox(
-                height: 18,
-              ),
-            ],
           ),
         ),
       ],

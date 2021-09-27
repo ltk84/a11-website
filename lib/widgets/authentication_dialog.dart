@@ -1,7 +1,8 @@
 import 'dart:ui';
 
-import '../widgets/custom_title.dart';
 import 'package:flutter/material.dart';
+
+import '../widgets/custom_title.dart';
 
 class AuthenticationDialog extends StatelessWidget {
   const AuthenticationDialog({Key? key}) : super(key: key);
