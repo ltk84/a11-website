@@ -55,7 +55,7 @@ class IntroductionPage extends StatelessWidget {
                 color: Colors.grey,
                 image: DecorationImage(
                   image: NetworkImage(
-                    'https://cors-anywhere.herokuapp.com/https://drive.google.com/uc?export=view&id=1av8Y0lbKfjbNDV8FssKlNbO9M92t4gpL',
+                    'https://drive.google.com/uc?export=view&id=1av8Y0lbKfjbNDV8FssKlNbO9M92t4gpL',
                   ),
                   fit: BoxFit.cover,
                 ),

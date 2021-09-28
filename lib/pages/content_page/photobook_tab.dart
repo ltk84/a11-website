@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '/widgets/photo_placeholder.dart';
+
 class PhotobookTab extends StatelessWidget {
   const PhotobookTab({Key? key}) : super(key: key);
 
@@ -10,8 +12,16 @@ class PhotobookTab extends StatelessWidget {
     final double gridScaleFactor = deviceWidth < 767 ? 0.45 : (deviceWidth < 1280 ? 0.55 : 1);
     final int gridColumn = deviceWidth < 767 ? 2 : (deviceWidth < 1280 ? 3 : 4);
 
+    final List<String> photoURLs = [
+      'https://drive.google.com/uc?export=view&id=1Smavx4SKGsgcpeyIa88whBEPbsywgAWc',
+      'https://drive.google.com/uc?export=view&id=1F0egBqsxBASkMZY5bX2U73rO2NjqXB-6',
+      'https://drive.google.com/uc?export=view&id=1kl8zJ33knSfgAzwoOUKYKrh5s1j-Jiwn',
+      'https://drive.google.com/uc?export=view&id=1W4aeRJSauZpSIzpC9B8ZSsVCygyf6ltZ',
+      'https://drive.google.com/uc?export=view&id=1hXhtXtL5Sk-c2NFakS32cbQHEF7TVWjf',
+      'https://drive.google.com/uc?export=view&id=17utftkUMicHswkyggkjb0ZmdnE6Zszuv',
+    ];
+
     return CustomScrollView(
-      physics: NeverScrollableScrollPhysics(),
       slivers: [
         SliverList(
           delegate: SliverChildListDelegate(
@@ -45,11 +55,9 @@ class PhotobookTab extends StatelessWidget {
                 SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: gridColumn),
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                return Card(
-                  color: Colors.grey,
-                );
+                return PhotoPlaceholder(photoURL: photoURLs[index],);
               },
-              childCount: 5,
+              childCount: photoURLs.length,
             ),
           ),
         ),
