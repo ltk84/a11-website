@@ -5,6 +5,11 @@ class PhotobookTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double deviceWidth = MediaQuery.of(context).size.width;
+    final double scaleFactor = deviceWidth < 767 ? 0.7 : 0.5;
+    final double gridScaleFactor = deviceWidth < 767 ? 0.45 : (deviceWidth < 1280 ? 0.55 : 1);
+    final int gridColumn = deviceWidth < 767 ? 2 : (deviceWidth < 1280 ? 3 : 4);
+
     return CustomScrollView(
       physics: NeverScrollableScrollPhysics(),
       slivers: [
@@ -23,7 +28,10 @@ class PhotobookTab extends StatelessWidget {
               SizedBox(
                 height: 18,
               ),
-              _buildSearchBar(),
+              Container(
+                alignment: Alignment.center,
+                child: _buildSearchBar(deviceWidth*scaleFactor),
+              ),
               SizedBox(
                 height: 18,
               ),
@@ -31,17 +39,14 @@ class PhotobookTab extends StatelessWidget {
           ),
         ),
         SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: 300),
+          padding: EdgeInsets.symmetric(horizontal: 150 * gridScaleFactor),
           sliver: SliverGrid(
             gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 3),
+                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: gridColumn),
             delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    color: Colors.grey,
-                  ),
+              (context, index) {
+                return Card(
+                  color: Colors.grey,
                 );
               },
               childCount: 5,
@@ -52,10 +57,10 @@ class PhotobookTab extends StatelessWidget {
     );
   }
 
-  Widget _buildSearchBar() {
+  Widget _buildSearchBar(double width) {
     return Container(
       height: 36,
-      padding: EdgeInsets.symmetric(horizontal: 400),
+      width: width,
       child: TextField(
         decoration: InputDecoration(
           filled: true,

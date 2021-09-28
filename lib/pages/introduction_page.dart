@@ -13,7 +13,7 @@ class IntroductionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isWebMobile = kIsWeb && (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android);
-    final double height = MediaQuery.of(context).size.height;
+    final Size deviceSize = MediaQuery.of(context).size;
 
     return Stack(
       children: [
@@ -48,7 +48,7 @@ class IntroductionPage extends StatelessWidget {
         CarouselSlider(
           items: [
             CustomTitle(
-              scale: 2,
+              scale: deviceSize.width < 800 ? 1.5 : 2.0,
             ),
             Container(
               decoration: BoxDecoration(
@@ -64,7 +64,7 @@ class IntroductionPage extends StatelessWidget {
           ],
           options: CarouselOptions(
             autoPlay: true,
-            height: height,
+            height: deviceSize.height,
             viewportFraction: 1.0,
             enlargeCenterPage: false,
           ),

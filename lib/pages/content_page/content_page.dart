@@ -7,6 +7,7 @@ import '../../widgets/svg_icon.dart';
 
 class ContentPage extends StatefulWidget {
   final Function onScroll;
+
   const ContentPage({Key? key, required this.onScroll}) : super(key: key);
 
   @override
@@ -24,7 +25,8 @@ class _ContentPageState extends State<ContentPage>
     tabController = TabController(initialIndex: 1, length: 3, vsync: this);
     scrollController.addListener(() {
       toPreviousPage = false;
-      if (scrollController.position.atEdge && scrollController.position.pixels == 0) {
+      if (scrollController.position.atEdge &&
+          scrollController.position.pixels == 0) {
         toPreviousPage = true;
       }
     });
@@ -40,6 +42,7 @@ class _ContentPageState extends State<ContentPage>
 
   @override
   Widget build(BuildContext context) {
+    final double textScaleFactor = MediaQuery.of(context).size.width < 767 ? 0.8 : 1.0;
     return Listener(
       // to detect scroll
       onPointerSignal: (pointerSignal) {
@@ -65,17 +68,21 @@ class _ContentPageState extends State<ContentPage>
                       'A11',
                       style: Theme.of(context).textTheme.headline1!.copyWith(
                             color: Theme.of(context).primaryColor,
+                            fontSize: Theme.of(context).textTheme.headline1!.fontSize! * textScaleFactor,
                           ),
                       textAlign: TextAlign.center,
                     ),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 500),
-                      child: _buildTabBar(),
+                      alignment: Alignment.center,
+                      child: _buildTabBar(textScaleFactor),
                     ),
                     SizedBox(
                       height: 8,
                     ),
-                    _buildHeaderDivider(),
+                    Container(
+                      alignment: Alignment.center,
+                      child: _buildHeaderDivider(textScaleFactor),
+                    ),
                     SizedBox(
                       height: 60,
                     ),
@@ -98,70 +105,70 @@ class _ContentPageState extends State<ContentPage>
     );
   }
 
-  Widget _buildTabBar() {
+  Widget _buildTabBar(double textScaleFactor) {
     return TabBar(
       controller: tabController,
-      isScrollable: false,
+      isScrollable: true,
       indicatorColor: Colors.transparent,
+      overlayColor: MaterialStateProperty.all(Colors.transparent),
       labelColor: Theme.of(context).primaryColor,
-      labelStyle: Theme.of(context).textTheme.headline2,
-      unselectedLabelStyle:
-      Theme.of(context).textTheme.headline2!.copyWith(
-        fontSize: (Theme.of(context)
-            .textTheme
-            .headline2!
-            .fontSize)! *
-            0.75,
+      labelStyle: Theme.of(context).textTheme.headline2!.copyWith(
+        fontSize: (Theme.of(context).textTheme.headline2!.fontSize)! * textScaleFactor,
       ),
+      unselectedLabelStyle: Theme.of(context).textTheme.headline2!.copyWith(
+            fontSize: (Theme.of(context).textTheme.headline2!.fontSize)! * textScaleFactor * 0.75,
+          ),
       tabs: [
-        Tab(
-          child: Container(
-            alignment: Alignment.bottomCenter,
-            child: Text('Yearbook'),
+        Container(
+          width: 120 * textScaleFactor,
+          alignment: Alignment.bottomRight,
+          child: Tab(
+            text: 'Yearbook',
           ),
         ),
-        Tab(
-          child: Container(
-            alignment: Alignment.bottomCenter,
-            child: Text('Photobook'),
+        Container(
+          width: 180 * textScaleFactor,
+          child: Tab(
+            text: 'Photobook',
           ),
         ),
-        Tab(
-          child: Container(
-            alignment: Alignment.bottomCenter,
-            child: Text('Profile'),
+        Container(
+          width: 120 * textScaleFactor,
+          alignment: Alignment.bottomLeft,
+          child: Tab(
+            text: 'Profile',
           ),
         ),
       ],
     );
   }
 
-  Widget _buildHeaderDivider() {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 675),
-      child: Row(
-        children: [
-          Expanded(
-            child: Divider(
-              color: Theme.of(context).primaryColor,
-              thickness: 0.5,
-            ),
+  Widget _buildHeaderDivider(double textScaleFactor) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Container(
+          width: 50 * textScaleFactor,
+          child: Divider(
+            color: Theme.of(context).primaryColor,
+            thickness: 0.5,
           ),
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 4),
-            child: SvgIcon(
-              iconPath: 'assets/icons/penguin.svg',
-              size: 16,
-            ),
+        ),
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 4),
+          child: SvgIcon(
+            iconPath: 'assets/icons/penguin.svg',
+            size: 16,
           ),
-          Expanded(
-            child: Divider(
-              color: Theme.of(context).primaryColor,
-              thickness: 0.5,
-            ),
+        ),
+        Container(
+          width: 50 * textScaleFactor,
+          child: Divider(
+            color: Theme.of(context).primaryColor,
+            thickness: 0.5,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
