@@ -21,47 +21,50 @@ class PhotobookTab extends StatelessWidget {
       'https://drive.google.com/uc?export=view&id=17utftkUMicHswkyggkjb0ZmdnE6Zszuv',
     ];
 
-    return CustomScrollView(
-      slivers: [
-        SliverList(
-          delegate: SliverChildListDelegate(
-            [
-              Center(
-                child: Text(
-                  'Albums /',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 18.0,
+    return ScrollConfiguration(
+      behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false,),
+      child: CustomScrollView(
+        slivers: [
+          SliverList(
+            delegate: SliverChildListDelegate(
+              [
+                Center(
+                  child: Text(
+                    'Albums /',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 18.0,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 18,
-              ),
-              Container(
-                alignment: Alignment.center,
-                child: _buildSearchBar(deviceWidth*scaleFactor),
-              ),
-              SizedBox(
-                height: 18,
-              ),
-            ],
-          ),
-        ),
-        SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: 150 * gridScaleFactor),
-          sliver: SliverGrid(
-            gridDelegate:
-                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: gridColumn),
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return PhotoPlaceholder(photoURL: photoURLs[index],);
-              },
-              childCount: photoURLs.length,
+                SizedBox(
+                  height: 18,
+                ),
+                Container(
+                  alignment: Alignment.center,
+                  child: _buildSearchBar(deviceWidth*scaleFactor),
+                ),
+                SizedBox(
+                  height: 18,
+                ),
+              ],
             ),
           ),
-        ),
-      ],
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 150 * gridScaleFactor),
+            sliver: SliverGrid(
+              gridDelegate:
+                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: gridColumn),
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  return PhotoPlaceholder(photoURL: photoURLs[index],);
+                },
+                childCount: photoURLs.length,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

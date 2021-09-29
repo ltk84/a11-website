@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class PhotoPlaceholder extends StatefulWidget {
@@ -36,7 +37,7 @@ class _PhotoPlaceholderState extends State<PhotoPlaceholder> {
             decoration: BoxDecoration(
               color: Colors.grey,
               image: DecorationImage(
-                image: NetworkImage(
+                image: CachedNetworkImageProvider(
                   widget.photoURL,
                 ),
                 fit: BoxFit.cover,
