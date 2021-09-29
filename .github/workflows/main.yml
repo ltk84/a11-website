@@ -43,6 +43,4 @@ jobs:
       - name: Run a multi-line script
         run: |
           flutter build web --web-renderer html --release
-          cd ./docs/web
-          mv ./docs/web/* ./docs
-          rm ./docs/web
+          mv docs/web/* docs/
