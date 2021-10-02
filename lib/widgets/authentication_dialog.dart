@@ -13,29 +13,17 @@ class AuthenticationDialog extends StatefulWidget {
 
 class _AuthenticationDialogState extends State<AuthenticationDialog>
     with SingleTickerProviderStateMixin {
-  late final AnimationController controller;
-  late final Animation<double> scaleAnimation;
-  late final Tween<double> blurAnimation;
-  final Duration animationDuration = Duration(milliseconds: 450);
+  late final Tween<double> _tweenAnimation;
+  final Duration animationDuration = Duration(milliseconds: 350);
 
   @override
   void initState() {
-    controller = AnimationController(vsync: this, duration: animationDuration);
-    scaleAnimation =
-        CurvedAnimation(parent: controller, curve: Curves.easeInOut);
-    blurAnimation = Tween<double>(begin: 0.1, end: 8.0);
-
-    controller.addListener(() {
-      setState(() {});
-    });
-
-    controller.forward();
+    _tweenAnimation = Tween<double>(begin: 0.1, end: 8.0);
     super.initState();
   }
 
   @override
   void dispose() {
-    controller.dispose();
     super.dispose();
   }
 
@@ -47,7 +35,7 @@ class _AuthenticationDialogState extends State<AuthenticationDialog>
         backgroundColor: Colors.transparent,
         elevation: 0,
         child: TweenAnimationBuilder<double>(
-          tween: blurAnimation,
+          tween: _tweenAnimation,
           duration: animationDuration,
           curve: Curves.easeIn,
           builder: (_, value, child) {
@@ -57,70 +45,69 @@ class _AuthenticationDialogState extends State<AuthenticationDialog>
                 sigmaY: value,
                 tileMode: TileMode.repeated,
               ),
-              child: child,
+              child: Transform.scale(
+                scale: value/8,
+                child: child,
+              ),
             );
           },
-          child: ScaleTransition(
-            scale: scaleAnimation,
-            child: Container(
-              height: 405,
-              width: 400,
-              decoration: BoxDecoration(
-                color: Color(0xFFC6BFBF).withOpacity(0.75),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 80, vertical: 20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CustomTitle(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    subtitle: 'Authentication',
-                  ),
-                  SizedBox(
-                    height: 14,
-                  ),
-                  _buildInputField('Username'),
-                  SizedBox(
-                    height: 14,
-                  ),
-                  _buildInputField('Password'),
-                  SizedBox(
-                    height: 24,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            controller.reverse();
-                            Navigator.of(context).pop();
-                          },
-                          style: ElevatedButton.styleFrom(
-                            primary: Color(0xFFA09898),
-                            onPrimary: Theme.of(context).backgroundColor,
-                          ),
-                          child: Text('Close'),
+          child: Container(
+            height: 405,
+            width: 400,
+            decoration: BoxDecoration(
+              color: Color(0xFFC6BFBF).withOpacity(0.75),
+              borderRadius: BorderRadius.circular(5),
+            ),
+            padding: EdgeInsets.symmetric(horizontal: 80, vertical: 20),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CustomTitle(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  subtitle: 'Authentication',
+                ),
+                SizedBox(
+                  height: 14,
+                ),
+                _buildInputField('Username'),
+                SizedBox(
+                  height: 14,
+                ),
+                _buildInputField('Password'),
+                SizedBox(
+                  height: 24,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        style: ElevatedButton.styleFrom(
+                          primary: Color(0xFFA09898),
+                          onPrimary: Theme.of(context).backgroundColor,
                         ),
+                        child: Text('Close'),
                       ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            primary: Color(0xFF2fbd50),
-                            //onPrimary: Theme.of(context).backgroundColor,
-                          ),
-                          child: Text('Confirm'),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          primary: Color(0xFF2fbd50),
+                          //onPrimary: Theme.of(context).backgroundColor,
                         ),
+                        child: Text('Confirm'),
                       ),
-                    ],
-                  ),
-                ],
-              ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ),
