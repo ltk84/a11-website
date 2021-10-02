@@ -9,13 +9,54 @@ import '../widgets/svg_icon.dart';
 import '../widgets/authentication_dialog.dart';
 import '../pages/content_page/content_page.dart';
 
+import 'package:firebase_core/firebase_core.dart';
+
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool _initialized = false;
+  bool _error = false;
+
+  void initializeFlutterFire() async {
+    try {
+      // Wait for Firebase to initialize and set `_initialized` state to true
+      await Firebase.initializeApp();
+      setState(() {
+        _initialized = true;
+      });
+    } catch (e) {
+      // Set `_error` state to true if Firebase initialization fails
+      setState(() {
+        _error = true;
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    initializeFlutterFire();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (_error) {
+      return MaterialApp();
+    }
+
+    // Show a loader until FlutterFire is initialized
+    if (!_initialized) {
+      return MaterialApp();
+    }
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -55,7 +96,9 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   final PageController pageController = PageController(initialPage: 0);
-  final isWebMobile = kIsWeb && (defaultTargetPlatform == TargetPlatform.iOS || defaultTargetPlatform == TargetPlatform.android);
+  final isWebMobile = kIsWeb &&
+      (defaultTargetPlatform == TargetPlatform.iOS ||
+          defaultTargetPlatform == TargetPlatform.android);
   bool darkMode = false;
   double btnAuthSize = 25;
   bool pageIsScrolling = false;
@@ -149,10 +192,14 @@ class _MyHomePageState extends State<MyHomePage> {
         child: PageView(
           scrollDirection: Axis.vertical,
           controller: pageController,
-          physics: isWebMobile ? AlwaysScrollableScrollPhysics() : NeverScrollableScrollPhysics(),
+          physics: isWebMobile
+              ? AlwaysScrollableScrollPhysics()
+              : NeverScrollableScrollPhysics(),
           children: [
             IntroductionPage(),
-            ContentPage(onScroll: _onScroll,),
+            ContentPage(
+              onScroll: _onScroll,
+            ),
           ],
         ),
       ),
