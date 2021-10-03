@@ -1,8 +1,10 @@
+import 'package:a11_website/core/services/cloud_firestore_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+import 'package:provider/provider.dart';
 
 import '../pages/introduction_page.dart';
 import '../widgets/svg_icon.dart';
@@ -57,32 +59,37 @@ class _MyAppState extends State<MyApp> {
       return MaterialApp();
     }
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primaryColor: Color(0xFF242424),
-        backgroundColor: Colors.white,
-        hintColor: Color(0xFFD1D1D1).withOpacity(0.6),
-        fontFamily: 'Lato',
-        textTheme: TextTheme(
-          headline1: TextStyle(
-            //color: Color(0xFF242424),
-            fontSize: 50,
-            fontFamily: 'Lobster',
-          ),
-          headline2: TextStyle(
-            //color: Color(0xFF242424),
-            fontSize: 25,
-          ),
-          subtitle2: TextStyle(
-            fontWeight: FontWeight.w700,
-            fontSize: 18,
-            //color: Color(0xFFD1D1D1).withOpacity(0.6),
+    return Provider(
+      create: (_) {
+        return FirestoreService();
+      },
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primaryColor: Color(0xFF242424),
+          backgroundColor: Colors.white,
+          hintColor: Color(0xFFD1D1D1).withOpacity(0.6),
+          fontFamily: 'Lato',
+          textTheme: TextTheme(
+            headline1: TextStyle(
+              //color: Color(0xFF242424),
+              fontSize: 50,
+              fontFamily: 'Lobster',
+            ),
+            headline2: TextStyle(
+              //color: Color(0xFF242424),
+              fontSize: 25,
+            ),
+            subtitle2: TextStyle(
+              fontWeight: FontWeight.w700,
+              fontSize: 18,
+              //color: Color(0xFFD1D1D1).withOpacity(0.6),
+            ),
           ),
         ),
+        home: MyHomePage(),
       ),
-      home: MyHomePage(),
     );
   }
 }
