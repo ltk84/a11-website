@@ -1,4 +1,5 @@
-import 'package:a11_website/core/services/cloud_firestore_service.dart';
+import 'package:a11_website/core/services/cloud_firestore/cloud_firestore_service.dart';
+import 'package:a11_website/core/services/cloud_firestore/cloud_firestore_service_implementation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +62,7 @@ class _MyAppState extends State<MyApp> {
 
     return Provider(
       create: (_) {
-        return FirestoreService();
+        return FirestoreServiceImpl();
       },
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
