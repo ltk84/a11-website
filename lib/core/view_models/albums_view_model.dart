@@ -7,7 +7,7 @@ class AlbumsViewModel extends ChangeNotifier {
   List<Album> albums = [];
 
   void loadAlbums() async {
-    albums = await _firestoreService.getData();
+    // albums = _firestoreService.getData();
     notifyListeners();
   }
 }

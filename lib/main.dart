@@ -1,5 +1,6 @@
 import 'package:a11_website/core/services/cloud_firestore/cloud_firestore_service.dart';
 import 'package:a11_website/core/services/cloud_firestore/cloud_firestore_service_implementation.dart';
+import 'package:a11_website/core/services/service_locator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +13,11 @@ import '../widgets/svg_icon.dart';
 import '../widgets/authentication_dialog.dart';
 import '../pages/content_page/content_page.dart';
 
-import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_core/firebase_core.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
+  // WidgetsFlutterBinding.ensureInitialized();
+  setupServiceLocator();
   runApp(MyApp());
 }
 
@@ -31,7 +33,7 @@ class _MyAppState extends State<MyApp> {
   void initializeFlutterFire() async {
     try {
       // Wait for Firebase to initialize and set `_initialized` state to true
-      await Firebase.initializeApp();
+      // await Firebase.initializeApp();
       setState(() {
         _initialized = true;
       });

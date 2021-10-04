@@ -1,15 +1,33 @@
+import 'package:a11_website/core/models/image.dart';
+import 'package:a11_website/core/services/service_locator.dart';
+import 'package:a11_website/core/view_models/photos_demo_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '/widgets/photo_placeholder.dart';
 
-class PhotobookTab extends StatelessWidget {
+class PhotobookTab extends StatefulWidget {
   const PhotobookTab({Key? key}) : super(key: key);
+
+  @override
+  _PhotobookTabState createState() => _PhotobookTabState();
+}
+
+class _PhotobookTabState extends State<PhotobookTab> {
+  PhotosViewModel model = serviceLocator.get<PhotosViewModel>();
+
+  @override
+  void initState() {
+    model.getData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final double deviceWidth = MediaQuery.of(context).size.width;
     final double scaleFactor = deviceWidth < 767 ? 0.7 : 0.5;
-    final double gridScaleFactor = deviceWidth < 767 ? 0.45 : (deviceWidth < 1280 ? 0.55 : 1);
+    final double gridScaleFactor =
+        deviceWidth < 767 ? 0.45 : (deviceWidth < 1280 ? 0.55 : 1);
     final int gridColumn = deviceWidth < 767 ? 2 : (deviceWidth < 1280 ? 3 : 4);
 
     final List<String> photoURLs = [
@@ -22,7 +40,9 @@ class PhotobookTab extends StatelessWidget {
     ];
 
     return ScrollConfiguration(
-      behavior: ScrollConfiguration.of(context).copyWith(scrollbars: false,),
+      behavior: ScrollConfiguration.of(context).copyWith(
+        scrollbars: false,
+      ),
       child: CustomScrollView(
         slivers: [
           SliverList(
@@ -42,7 +62,7 @@ class PhotobookTab extends StatelessWidget {
                 ),
                 Container(
                   alignment: Alignment.center,
-                  child: _buildSearchBar(deviceWidth*scaleFactor),
+                  child: _buildSearchBar(deviceWidth * scaleFactor),
                 ),
                 SizedBox(
                   height: 18,
@@ -50,16 +70,24 @@ class PhotobookTab extends StatelessWidget {
               ],
             ),
           ),
-          SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 150 * gridScaleFactor),
-            sliver: SliverGrid(
-              gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: gridColumn),
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  return PhotoPlaceholder(photoURL: photoURLs[index],);
-                },
-                childCount: photoURLs.length,
+          ChangeNotifierProvider<PhotosViewModel>(
+            create: (context) => model,
+            child: Consumer<PhotosViewModel>(
+              builder: (context, model, child) => SliverPadding(
+                padding:
+                    EdgeInsets.symmetric(horizontal: 150 * gridScaleFactor),
+                sliver: SliverGrid(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: gridColumn),
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return PhotoPlaceholder(
+                        photoURL: model.images[index].url,
+                      );
+                    },
+                    childCount: model.images.length,
+                  ),
+                ),
               ),
             ),
           ),
