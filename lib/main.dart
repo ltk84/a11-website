@@ -128,6 +128,13 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () async {
+      //     print('pressed');
+      //     FirestoreService f = serviceLocator.get<FirestoreService>();
+      //     f.initFakeData();
+      //   },
+      // ),
       backgroundColor: Theme.of(context).backgroundColor,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
