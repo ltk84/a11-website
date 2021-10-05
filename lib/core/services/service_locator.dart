@@ -1,3 +1,5 @@
+import 'package:a11_website/core/services/authentication/authentication_service.dart';
+import 'package:a11_website/core/services/authentication/authentication_service_implementation.dart';
 import 'package:a11_website/core/services/cloud_firestore/cloud_firestore_service.dart';
 import 'package:a11_website/core/services/cloud_firestore/cloud_firestore_service_implementation.dart';
 import 'package:a11_website/core/view_models/photos_demo_view_model.dart';
@@ -9,6 +11,8 @@ void setupServiceLocator() {
   // services
   serviceLocator
       .registerLazySingleton<FirestoreService>(() => FirestoreServiceImpl());
+  serviceLocator.registerLazySingleton<AuthenticationService>(
+      () => AuthenticationServiceImpl());
   // serviceLocator.registerLazySingleton<>(() => StorageServiceImpl());
   // serviceLocator.registerLazySingleton<CurrencyService>(() => CurrencyServiceImpl());
 
