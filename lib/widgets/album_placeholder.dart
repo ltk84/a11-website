@@ -46,7 +46,7 @@ class _AlbumPlaceholderState extends State<AlbumPlaceholder> {
               color: Colors.black26,
               spreadRadius: 1,
               blurRadius: 4,
-              offset: Offset(1, 1),
+              offset: Offset(0, 1),
             ),
           ],
         ),
