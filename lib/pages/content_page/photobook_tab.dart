@@ -1,10 +1,8 @@
-import 'package:a11_website/core/models/image.dart';
 import 'package:a11_website/core/services/service_locator.dart';
 import 'package:a11_website/core/view_models/photos_demo_view_model.dart';
+import 'package:a11_website/widgets/album_placeholder.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '/widgets/photo_placeholder.dart';
 
 class PhotobookTab extends StatefulWidget {
   const PhotobookTab({Key? key}) : super(key: key);
@@ -28,16 +26,16 @@ class _PhotobookTabState extends State<PhotobookTab> {
     final double scaleFactor = deviceWidth < 767 ? 0.7 : 0.5;
     final double gridScaleFactor =
         deviceWidth < 767 ? 0.45 : (deviceWidth < 1280 ? 0.55 : 1);
-    final int gridColumn = deviceWidth < 767 ? 2 : (deviceWidth < 1280 ? 3 : 4);
+    final int gridColumn = deviceWidth < 767 ? 1 : (deviceWidth < 1280 ? 2 : 3);
 
-    final List<String> photoURLs = [
-      'https://drive.google.com/uc?export=view&id=1Smavx4SKGsgcpeyIa88whBEPbsywgAWc',
-      'https://drive.google.com/uc?export=view&id=1F0egBqsxBASkMZY5bX2U73rO2NjqXB-6',
-      'https://drive.google.com/uc?export=view&id=1kl8zJ33knSfgAzwoOUKYKrh5s1j-Jiwn',
-      'https://drive.google.com/uc?export=view&id=1W4aeRJSauZpSIzpC9B8ZSsVCygyf6ltZ',
-      'https://drive.google.com/uc?export=view&id=1hXhtXtL5Sk-c2NFakS32cbQHEF7TVWjf',
-      'https://drive.google.com/uc?export=view&id=17utftkUMicHswkyggkjb0ZmdnE6Zszuv',
-    ];
+    // final List<String> photoURLs = [
+    //   'https://drive.google.com/uc?export=view&id=1Smavx4SKGsgcpeyIa88whBEPbsywgAWc',
+    //   'https://drive.google.com/uc?export=view&id=1F0egBqsxBASkMZY5bX2U73rO2NjqXB-6',
+    //   'https://drive.google.com/uc?export=view&id=1kl8zJ33knSfgAzwoOUKYKrh5s1j-Jiwn',
+    //   'https://drive.google.com/uc?export=view&id=1W4aeRJSauZpSIzpC9B8ZSsVCygyf6ltZ',
+    //   'https://drive.google.com/uc?export=view&id=1hXhtXtL5Sk-c2NFakS32cbQHEF7TVWjf',
+    //   'https://drive.google.com/uc?export=view&id=17utftkUMicHswkyggkjb0ZmdnE6Zszuv',
+    // ];
 
     return ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(
@@ -78,11 +76,15 @@ class _PhotobookTabState extends State<PhotobookTab> {
                     EdgeInsets.symmetric(horizontal: 150 * gridScaleFactor),
                 sliver: SliverGrid(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: gridColumn),
+                    crossAxisCount: gridColumn,
+                    childAspectRatio: 0.88,
+                  ),
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
-                      return PhotoPlaceholder(
+                      return AlbumPlaceholder(
                         photoURL: model.images[index].url,
+                        title: 'Album',
+                        subtitle: '1000 photos',
                       );
                     },
                     childCount: model.images.length,

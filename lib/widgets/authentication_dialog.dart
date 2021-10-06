@@ -14,7 +14,7 @@ class AuthenticationDialog extends StatefulWidget {
 class _AuthenticationDialogState extends State<AuthenticationDialog>
     with SingleTickerProviderStateMixin {
   late final Tween<double> _tweenAnimation;
-  final Duration animationDuration = Duration(milliseconds: 350);
+  final Duration animationDuration = Duration(milliseconds: 450);
 
   @override
   void initState() {
