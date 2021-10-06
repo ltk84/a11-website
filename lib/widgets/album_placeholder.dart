@@ -39,6 +39,17 @@ class _AlbumPlaceholderState extends State<AlbumPlaceholder> {
       },
       child: Container(
         margin: EdgeInsets.fromLTRB(12, 5, 12, 24),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black26,
+              spreadRadius: 1,
+              blurRadius: 4,
+              offset: Offset(1, 1),
+            ),
+          ],
+        ),
         child: Stack(
           alignment: AlignmentDirectional.bottomCenter,
           children: [
