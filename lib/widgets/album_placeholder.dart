@@ -6,7 +6,12 @@ class AlbumPlaceholder extends StatefulWidget {
   final String title;
   final String subtitle;
 
-  const AlbumPlaceholder({Key? key, required this.photoURL, required this.title, required this.subtitle}) : super(key: key);
+  const AlbumPlaceholder(
+      {Key? key,
+      required this.photoURL,
+      required this.title,
+      required this.subtitle})
+      : super(key: key);
 
   @override
   _AlbumPlaceholderState createState() => _AlbumPlaceholderState();
@@ -17,100 +22,100 @@ class _AlbumPlaceholderState extends State<AlbumPlaceholder> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (_, constraints) {
-      return InkWell(
-        hoverColor: Colors.transparent,
-        highlightColor: Colors.transparent,
-        splashColor: Colors.transparent,
-        focusColor: Colors.transparent,
-        onTap: () {},
-        onHover: (hover) {
-          setState(() {
-            if (hover) {
-              opacity = 1;
-            } else {
-              opacity = 0;
-            }
-          });
-        },
-        child: Column(
+    return InkWell(
+      hoverColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
+      focusColor: Colors.transparent,
+      onTap: () {},
+      onHover: (hover) {
+        setState(() {
+          if (hover) {
+            opacity = 1;
+          } else {
+            opacity = 0;
+          }
+        });
+      },
+      child: Container(
+        margin: EdgeInsets.fromLTRB(12, 5, 12, 24),
+        child: Stack(
+          alignment: AlignmentDirectional.bottomCenter,
           children: [
-            _buildPhotoSection(widget.photoURL, opacity, constraints.maxHeight * 0.80),
-            _buildDescriptionSection(widget.title, widget.subtitle, constraints.maxHeight * 0.12)
+            _buildPhotoCover(widget.photoURL),
+            _buildHoveringOverlay(opacity),
+            _buildAlbumTitle(widget.title, widget.subtitle)
           ],
         ),
-      );
-    });
-  }
-
-  Widget _buildPhotoSection(String photoURL, double opacity, double height) {
-    return Container(
-      height: height,
-      child: Stack(
-        alignment: AlignmentDirectional.bottomCenter,
-        children: [
-          Container(
-            margin: EdgeInsets.fromLTRB(12, 5, 12, 0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(8),
-              ),
-              color: Colors.grey,
-              image: DecorationImage(
-                image: CachedNetworkImageProvider(
-                  widget.photoURL,
-                ),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          AnimatedOpacity(
-            opacity: opacity,
-            duration: Duration(milliseconds: 200),
-            curve: Curves.easeIn,
-            child: Container(
-              margin: EdgeInsets.fromLTRB(12, 5, 12, 0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(8),
-                ),
-                gradient: LinearGradient(
-                  end: Alignment.topCenter,
-                  begin: Alignment.bottomCenter,
-                  colors: [
-                    Colors.transparent,
-                    Colors.transparent,
-                    Colors.transparent,
-                    Colors.black38
-                  ],
-                  stops: [0, 0.2, 0.75, 1],
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
 
-  Widget _buildDescriptionSection(String title, String subtitle, double height) {
+  Widget _buildPhotoCover(String photoURL) {
     return Container(
-      height: height,
-      width: double.maxFinite,
-      margin: EdgeInsets.fromLTRB(12, 0, 12, 0),
+      //margin: EdgeInsets.fromLTRB(12, 5, 12, 12),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.vertical(
-          bottom: Radius.circular(8),
+        borderRadius: BorderRadius.circular(8),
+        color: Colors.grey,
+        image: DecorationImage(
+          image: CachedNetworkImageProvider(
+            photoURL,
+          ),
+          fit: BoxFit.cover,
         ),
-        color: Theme.of(context).primaryColor,
       ),
-      alignment: Alignment.center,
+    );
+  }
+
+  Widget _buildHoveringOverlay(double opacity) {
+    return AnimatedOpacity(
+      opacity: opacity,
+      duration: Duration(milliseconds: 200),
+      curve: Curves.easeIn,
+      child: Container(
+        //margin: EdgeInsets.fromLTRB(12, 5, 12, 12),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          gradient: LinearGradient(
+            end: Alignment.topCenter,
+            begin: Alignment.bottomCenter,
+            colors: [
+              Colors.transparent,
+              Colors.transparent,
+              Colors.transparent,
+              Colors.black38
+            ],
+            stops: [0, 0.2, 0.75, 1],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAlbumTitle(String title, String subtitle) {
+    return Container(
+      width: double.maxFinite,
+      //margin: EdgeInsets.fromLTRB(12, 5, 12, 12),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Colors.transparent,
+            Colors.transparent,
+            Theme.of(context).primaryColor.withOpacity(0.54),
+            Theme.of(context).primaryColor.withOpacity(0.87),
+          ],
+          stops: [0, 0.2, 0.85, 1],
+        ),
+      ),
+      alignment: Alignment.bottomCenter,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Flexible(
             child: Container(
-              height: double.maxFinite,
               padding: EdgeInsets.only(top: 8),
               child: FittedBox(
                 child: Text(
@@ -125,7 +130,6 @@ class _AlbumPlaceholderState extends State<AlbumPlaceholder> {
           ),
           Flexible(
             child: Container(
-              height: double.maxFinite,
               padding: EdgeInsets.only(bottom: 8),
               child: FittedBox(
                 child: Text(
