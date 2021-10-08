@@ -46,13 +46,44 @@ class _PhotobookTabState extends State<PhotobookTab> {
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                Center(
-                  child: Text(
-                    'Albums /',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 18.0,
-                    ),
+                Container(
+                  margin: EdgeInsets.symmetric(
+                      horizontal: (deviceWidth * (1 - scaleFactor)) / 2),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.arrow_back_ios_rounded,
+                        ),
+                        iconSize: 16,
+                        splashRadius: 14.0 / scaleFactor,
+                      ),
+                      Expanded(
+                        child: Center(
+                          child: Text(
+                            'Albums /',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w700,
+                              fontSize: 18.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Visibility(
+                        visible: true,
+                        child: IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.arrow_back_ios_rounded,
+                            color: Colors.transparent,
+                          ),
+                          iconSize: 16,
+                          splashRadius: 14.0 / scaleFactor,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(
