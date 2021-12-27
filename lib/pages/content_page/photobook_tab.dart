@@ -25,8 +25,8 @@ class _PhotobookTabState extends State<PhotobookTab> {
     final double deviceWidth = MediaQuery.of(context).size.width;
     final double scaleFactor = deviceWidth < 767 ? 0.7 : 0.5;
     final double gridScaleFactor =
-        deviceWidth < 767 ? 0.45 : (deviceWidth < 1280 ? 0.55 : 1);
-    final int gridColumn = deviceWidth < 767 ? 1 : (deviceWidth < 1280 ? 2 : 3);
+        deviceWidth < 767 ? 0.45 : (deviceWidth < 1024 ? 0.55 : 1);
+    final int gridColumn = deviceWidth < 767 ? 1 : (deviceWidth < 1024 ? 2 : (deviceWidth < 1280 ? 3 : 4));
 
     // final List<String> photoURLs = [
     //   'https://drive.google.com/uc?export=view&id=1Smavx4SKGsgcpeyIa88whBEPbsywgAWc',
