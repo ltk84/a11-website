@@ -38,12 +38,12 @@ class _AlbumPlaceholderState extends State<AlbumPlaceholder> {
         });
       },
       child: Container(
-        margin: EdgeInsets.fromLTRB(12, 5, 12, 24),
+        margin: EdgeInsets.fromLTRB(8, 5, 8, 12),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(5),
           boxShadow: [
             BoxShadow(
-              color: Colors.black26,
+              color: Colors.black12,
               spreadRadius: 1,
               blurRadius: 4,
               offset: Offset(0, 1),
@@ -66,7 +66,7 @@ class _AlbumPlaceholderState extends State<AlbumPlaceholder> {
     return Container(
       //margin: EdgeInsets.fromLTRB(12, 5, 12, 12),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(5),
         color: Colors.grey,
         image: DecorationImage(
           image: CachedNetworkImageProvider(
@@ -86,7 +86,7 @@ class _AlbumPlaceholderState extends State<AlbumPlaceholder> {
       child: Container(
         //margin: EdgeInsets.fromLTRB(12, 5, 12, 12),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(5),
           gradient: LinearGradient(
             end: Alignment.topCenter,
             begin: Alignment.bottomCenter,
@@ -108,7 +108,7 @@ class _AlbumPlaceholderState extends State<AlbumPlaceholder> {
       width: double.maxFinite,
       //margin: EdgeInsets.fromLTRB(12, 5, 12, 12),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(5),
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,

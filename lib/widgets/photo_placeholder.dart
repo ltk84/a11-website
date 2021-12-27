@@ -35,6 +35,7 @@ class _PhotoPlaceholderState extends State<PhotoPlaceholder> {
           Container(
             margin: EdgeInsets.all(5),
             decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
               color: Colors.grey,
               image: DecorationImage(
                 image: CachedNetworkImageProvider(
@@ -51,6 +52,7 @@ class _PhotoPlaceholderState extends State<PhotoPlaceholder> {
             child: Container(
               margin: EdgeInsets.all(5),
               decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
